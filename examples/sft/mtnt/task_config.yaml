@@ -1,0 +1,54 @@
+evalbs: 0
+wordydev: "eval_dev"
+
+# eva:
+#   n_shot: 2
+
+domain_weights: 
+  enabled: false
+  weights_dir: "/home/aiscuser/prayas/temp/DoReMI-Implementation/doremi/configs/metamathqa_doremi_r1_120M_ref:metamathqa_config_120M.json" 
+
+curricullum:
+  enabled: false
+  beta: 0.9
+  lamb: 0.5
+
+subsel:
+  eval_source: "train"
+  dev_source: "eval"
+  eval_mask_input: true   # mask prompt in eval loss (false = include prompt for better grad signal)
+  dev_mask_input: true    # mask prompt in dev loss
+  anchorbs: 4
+  anchors: 0
+  val_srcwt: false
+
+  val_anchors: true
+  domainwise: false
+  apdg_iters: 128
+
+  minority_full: false
+  minority_classes: [0, 1, 3, 5, 7, 8, 9, 10, 11, 13]
+  reg: 1e-1
+  iters: 100
+  verbose: false
+
+grads:
+  # grad_layer: [27,26,25,24,23,22, 21,20,19,18,17,16]
+  # grad_layer: [35,34,33]
+  grad_layer: [27,26,25]
+
+  # grad_layer: null
+  # grad_layer: [4,8,12,16,20,24,27]
+  # grad_layer: [27,26,25,24,23,22]
+  # grad_layer: [27]
+  use_lora: true  # false for pretraining (full-weight grads)
+  dimred: false
+  dimred_dim: 1024
+  chunk_size: 8
+  normalize: true
+  lowpass_adam: false
+  # lowpass_train: true
+  # lowpass_val: true
+  val_smooth: "val"
+
+train_grad_method: "actual"
